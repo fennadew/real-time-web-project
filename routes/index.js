@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 require('dotenv').config();
+const fetch = require('node-fetch');
 
 const ns = require('ns-api')({
     username: process.env.API_USER,
@@ -64,8 +65,19 @@ router.post('/', (req, res) => {
         return name === req.body.nextStation.toLowerCase();
     });
 
-    res.send(selectionLocation);
+    const url = 'https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=' + req.body.lat + ',' + req.body.lon + '&destinations=' + selectionLocation[0].lat + ',' + selectionLocation[0].lon + '&key=' + process.env.API_GOOGLE_KEY;
 
+    fetch(url)
+        .then(res => {
+            return res.json();
+        })
+        .then(myJson => {
+            const miles = myJson.rows[0].elements[0].distance.text.replace(/[^\d.-]/g, '');
+            const km = Number(miles) / 0.62137;
+            const speed = 120;
+            const duration = (km / speed) * 60;
+            console.log(parseInt(duration))
+        })
 
 
     // ns.reisadvies(params, myCallback);
