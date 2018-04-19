@@ -1,4 +1,18 @@
 <%- include('partials/head.ejs') %>
 <main>
+    <form autocomplete="off" method="post" action="/">
+        <label>
+                <input id="nextStation" type="text" name="nextStation" placeholder="Volgende station">
+            <span class="loader hidden"></span>
+        </label>
+        <div class="nextstation-autocomplete">
+        </div>
+        <label>
+            <input id="lastStation" type="text" name="finalStation" placeholder="Eind station">
+        </label>
+        <div class="laststation-autocomplete">
+        </div>
+        <input type="submit" value="Bevestigen">
+    </form>
 </main>
 <%- include('partials/foot.ejs') %>
