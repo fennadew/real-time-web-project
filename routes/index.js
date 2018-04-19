@@ -59,12 +59,14 @@ router.post('/', (req, res) => {
         toStation: req.body.finalStation
     };
 
-    const location = locations.filter((obj) => {
-        return obj.name.toLowerCase() === req.body.nextStation.toLowerCase();
+    const selectionLocation = locations.filter((obj) => {
+        const name = obj.name.toLowerCase();
+        return name === req.body.nextStation.toLowerCase();
     });
-    console.log(location)
 
-    // console.log(locations)
+    res.send(selectionLocation);
+
+
 
     // ns.reisadvies(params, myCallback);
     //
