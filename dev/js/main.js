@@ -23,6 +23,7 @@ const callBackNavigator = {
         htmlElements.retrievingMessage.classList.add('hidden');
         htmlElements.errorMessage.classList.add('hidden');
         htmlElements.loader.classList.add('hidden');
+        console.log(positionUser.longitude, positionUser.latitude)
     },
     error(err) {
         console.log(err.message);

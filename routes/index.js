@@ -65,7 +65,12 @@ router.post('/', (req, res) => {
         return name === req.body.nextStation.toLowerCase();
     });
 
+
     const url = 'https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=' + req.body.lat + ',' + req.body.lon + '&destinations=' + selectionLocation[0].lat + ',' + selectionLocation[0].lon + '&key=' + process.env.API_GOOGLE_KEY;
+
+    const dataUser = {
+        time: ''
+    };
 
     fetch(url)
         .then(res => {
@@ -76,32 +81,78 @@ router.post('/', (req, res) => {
             const km = Number(miles) / 0.62137;
             const speed = 120;
             const duration = (km / speed) * 60;
-            console.log(parseInt(duration))
-        })
+
+            const date = new Date();
+            const hours = date.getHours();
+            const minutes = "0" + (date.getMinutes() + parseInt(duration));
+
+            dataUser.time = hours + minutes.substr(-2);
+            ns.reisadvies(params, myCallback);
+
+        });
 
 
-    // ns.reisadvies(params, myCallback);
-    //
-    // function myCallback(err, data) {
-    //     if (err) {
-    //         console.log(err);
-    //     } else {
-    //         let dataTrains = [];
-    //         dataTrains = data, {
-    //             depth: null,
-    //             colors: true
-    //         };
-    //         extractData(dataTrains)
-    //     }
-    // }
-    //
-    // function extractData(data) {
-    //     var newArray = data.filter((obj) => {
-    //         return obj.AantalOverstappen === '0';
-    //     });
-    //
-    //     console.dir(newArray);
-    // }
+    function myCallback(err, data) {
+        if (err) {
+            console.log(err);
+        } else {
+            let dataTrains = [];
+            dataTrains = data, {
+                depth: null,
+                colors: true
+            };
+            extractData(dataTrains)
+        }
+    }
+
+    function extractData(data) {
+        const newArray = data.filter((obj) => {
+            return obj.AantalOverstappen === '0';
+        });
+
+        for (let i = 0; i < newArray.length; i++) {
+            newArray[i].ActueleVertrekTijd = timeConverter(newArray[i].ActueleVertrekTijd)
+        }
+
+        filterTrains(newArray);
+    }
+
+    function timeConverter(unix_timestamp) {
+        const date = new Date(unix_timestamp);
+        const hours = date.getHours();
+        const minutes = "0" + date.getMinutes();
+        return hours + minutes.substr(-2);
+    }
+
+    function filterTrains(data) {
+        function findClosest (num, arr) {
+            var mid;
+            var lo = 0;
+            var hi = arr.length - 1;
+            while (hi - lo > 1) {
+                mid = Math.floor ((lo + hi) / 2);
+                if (Number(arr[mid].ActueleVertrekTijd) < num) {
+                    lo = mid;
+                } else {
+                    hi = mid;
+                }
+            }
+            if (num - Number(arr[lo].ActueleVertrekTijd) <= Number(arr[hi].ActueleVertrekTijd) - num) {
+                return Number(arr[lo].ActueleVertrekTijd);
+            }
+            return Number(arr[hi].ActueleVertrekTijd);
+        }
+        const closest = findClosest(dataUser, data);
+
+
+        const newArray = data.filter((obj) => {
+            return obj.ActueleVertrekTijd === String(closest);
+        });
+
+        console.log(newArray[0]);
+
+    }
+
 
     // res.send(data);
 });
