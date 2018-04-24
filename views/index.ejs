@@ -7,18 +7,27 @@
             <span class="retrieving">Retrieving location</span>
             <span class="error hidden">Please allow location access</span>
             <label>
-                <input id="nextStation" type="text" name="nextStation" placeholder="Next station of the train">
+                <input id="nextStation" class="required" type="text" name="nextStation" placeholder="Next station of the train">
             </label>
             <ul class="nextstation-autocomplete">
             </ul>
             <label>
-                <input id="lastStation" type="text" name="finalStation" placeholder="End station of the train">
+                <input id="lastStation" class="required" type="text" name="finalStation" placeholder="End station of the train">
             </label>
             <ul class="laststation-autocomplete">
             </ul>
+            <div class="offset">
+            <label for="note">Notification</label>
+            <select id="note" class="required">
+                <option value="conductor-in">Conductor in the train</option>
+                <option value="conductor-out">Conductor left the train</option>
+                <option value="vomit">Vomit in the train</option>
+                <option value="fight">Fight in the train</option>
+            </select>
+            </div>
             <div class="hidden">
-                <input id="lon" type="text" name="lon">
-                <input id="lat" type="text" name="lat">
+                <input id="lon" type="text" name="lon" class="required">
+                <input id="lat" type="text" name="lat" class="required">
             </div>
         </fieldset>
         <input type="submit" value="Bevestigen">

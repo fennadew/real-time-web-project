@@ -1,7 +1,4 @@
-const express = require('express');
-const router = express.Router();
 require('dotenv').config();
-const fetch = require('node-fetch');
 
 const ns = require('ns-api')({
     username: process.env.API_USER,
@@ -12,8 +9,6 @@ let stationData = {};
 let stationDataArray = [];
 let locations = [];
 let locationsNL = [];
-
-ns.stations('Type', callBackStations);
 
 function callBackStations(err, data) {
     if (err) {
@@ -41,23 +36,6 @@ function callBackStations(err, data) {
     }
 }
 
-router.get('/', (req, res) => {
-    res.render('index', {title: 'NS Updates'})
-});
+ns.stations('Type', callBackStations);
 
-router.get('/api', (req, res) => {
-    const val = req.query.nextStation;
-    const availableLocations = locations.filter((obj) => {
-        const name = obj.name.toLowerCase();
-        return name.startsWith(val);
-    });
-    res.json(availableLocations)
-});
-
-
-
-router.post('/', (req, res) => {
-    // res.send(bin);
-});
-
-module.exports = router;
+module.exports = locations;

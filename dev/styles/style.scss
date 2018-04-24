@@ -101,13 +101,54 @@ label {
   position: relative;
 }
 
+.success-msg {
+  color: green;
+}
+
+.warning-msg {
+  color: red;
+}
+
 .error {
   color: red;
+}
+.error-input {
+  border: 1px solid red;
 }
 .error, .retrieving {
   text-align: center;
   display: block;
   margin-top: 15px;
+}
+
+ul li {
+  height: 44px;
+  line-height: 44px;
+  span {
+    font-weight: 700;
+  }
+}
+
+.offset {
+  padding: 15px 0;
+  label {
+    padding-bottom: 10px;
+  }
+}
+
+select {
+  position: relative;
+  height: 40px;
+  border: 1px solid #000;
+  width: 100%;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  background: #FFF;
+  cursor: pointer;
+  overflow: hidden;
+  padding: 0 15px;
+  transition: height 200ms ease;
 }
 
 @keyframes spin {
