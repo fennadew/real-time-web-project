@@ -229,6 +229,14 @@ MongoClient.connect(url, function (err, client) {
                                 {"ReisDeel.RitNummer": train.ReisDeel[0].RitNummer},
                                 {$push: {"Notificaties": {message: data.notifications, time: new Date()}}}
                             );
+                            console.log(docs[i].Notificaties);
+                            docs[i].Notificaties.push({message: data.notifications, time: new Date()});
+
+                            const obj = {
+                                train: docs[i],
+                                index: i
+                            };
+                            io.sockets.emit('update', obj);
                         }
                     }
                     if (exist === false) {
@@ -244,7 +252,7 @@ MongoClient.connect(url, function (err, client) {
                         io.sockets.emit('notifications', train);
                     }
                 });
-                io.sockets.emit('success', "Notification is recieved");
+                socket.emit('success', "Notification is recieved");
             }
         });
 

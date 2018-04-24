@@ -64,7 +64,7 @@ body, html {
 }
 
 body {
-  font-family:  'Montserrat', sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 legend {
@@ -112,16 +112,18 @@ label {
 .error {
   color: red;
 }
+
 .error-input {
   border: 1px solid red;
 }
+
 .error, .retrieving {
   text-align: center;
   display: block;
   margin-top: 15px;
 }
 
-ul li {
+form ul li {
   height: 44px;
   line-height: 44px;
   span {
@@ -133,6 +135,25 @@ ul li {
   padding: 15px 0;
   label {
     padding-bottom: 10px;
+  }
+}
+
+h1 {
+  font-size: 2em;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.notifications {
+  width: 500px;
+  margin: 40px auto;
+  li {
+    padding: 10px 0;
+    border-bottom: 1px solid black;
+  }
+  .big {
+    font-size: 1.2em;
+    font-weight: 700;
   }
 }
 

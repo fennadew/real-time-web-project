@@ -9,13 +9,11 @@ const autoComplete = {
     },
     showList(input, list) {
         input.addEventListener("input", () => {
-            htmlElements.loader.classList.remove('hidden');
             fetch('/api?nextStation=' + input.value)
                 .then((response) => {
                     return response.json();
                 })
                 .then((myJson) => {
-                    htmlElements.loader.classList.add('hidden');
                     this.createList(myJson, input, list);
                 });
         });
