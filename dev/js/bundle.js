@@ -72,8 +72,14 @@ const formHandler = {
                             htmlElements.requiredInputs[i].classList.remove('error-input');
                         }
                     }
+                const select = document.getElementsByTagName("select")[0];
+                const option = select.options[select.selectedIndex].value;
+
+
                     if(allFilled) {
                         const values = Object.values(htmlElements.form).reduce((obj,field) => { obj[field.name] = field.value; return obj }, {});
+                        values.notifications = option;
+                        console.log(values)
                         socketIo.socket.emit('submit', values);
                     }
             });
@@ -100,7 +106,6 @@ const socketIo = {
     socket: io(),
     init() {
         this.socket.on('notifications', function (data) {
-            console.log(data);
         });
         this.socket.on('warning', function (error) {
             console.log(error);
@@ -110,6 +115,24 @@ const socketIo = {
             console.log(msg);
             formHandler.showMessage("success", msg);
         });
+        this.socket.on('notificationsHistory', function (noti) {
+            content.showNotifications(noti)
+        });
+    }
+};
+
+const content = {
+    showNotifications(notifications) {
+        console.log(notifications)
+        const ul = document.createElement('ul');
+        for(let i = notifications.length - 1; i >= 0; i--) {
+            const li = document.createElement('li');
+            const l = notifications[i].ReisDeel[0].ReisStop.length - 1;
+            const text = document.createTextNode(notifications[i].ReisDeel[0].VervoerType + notifications[i].ReisDeel[0].ReisStop[l].Naam);
+            li.appendChild(text);
+            ul.appendChild(li);
+        }
+        htmlElements.notifications.appendChild(ul);
     }
 };
 
@@ -126,7 +149,9 @@ const htmlElements = {
     latInput: document.getElementById('lat'),
     loader: document.querySelector('.loader'),
     form: document.querySelector("form"),
-    requiredInputs: document.querySelectorAll('.required')
+    requiredInputs: document.querySelectorAll('.required'),
+    empty: document.querySelector('.empty'),
+    notifications: document.querySelector('.notifications')
 };
 
 module.exports = htmlElements;

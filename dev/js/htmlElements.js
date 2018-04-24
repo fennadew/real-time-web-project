@@ -9,7 +9,9 @@ const htmlElements = {
     latInput: document.getElementById('lat'),
     loader: document.querySelector('.loader'),
     form: document.querySelector("form"),
-    requiredInputs: document.querySelectorAll('.required')
+    requiredInputs: document.querySelectorAll('.required'),
+    empty: document.querySelector('.empty'),
+    notifications: document.querySelector('.notifications')
 };
 
 module.exports = htmlElements;

@@ -7,12 +7,12 @@
             <span class="retrieving">Retrieving location</span>
             <span class="error hidden">Please allow location access</span>
             <label>
-                <input id="nextStation" class="required" type="text" name="nextStation" placeholder="Next station of the train">
+                <input id="nextStation" class="required" type="text" name="nextStation" value="Amersfoort" placeholder="Next station of the train">
             </label>
             <ul class="nextstation-autocomplete">
             </ul>
             <label>
-                <input id="lastStation" class="required" type="text" name="finalStation" placeholder="End station of the train">
+                <input id="lastStation" class="required" type="text" name="finalStation" value="Utrecht centraal" placeholder="End station of the train">
             </label>
             <ul class="laststation-autocomplete">
             </ul>
@@ -32,5 +32,10 @@
         </fieldset>
         <input type="submit" value="Bevestigen">
     </form>
+
+    <section class="notifications">
+        <h1>Notifications</h1>
+        <h2 class="empty">No notifications</h2>
+    </section>
 </main>
 <%- include('partials/foot.ejs') %>
