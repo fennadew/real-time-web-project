@@ -1,25 +1,45 @@
-# real-time-web-project
+# Real Time Web course repo
 
-This repo will hold the project you're going to build during the last two weeks of RTW. It functions as a way to show you've attained the following learning goals of this course:
+For this course I created a real conductor spotting application. To make this happen, I used the NS API, Google maps API, Node, Express, EJS and Socket.io. Users can send a notification when they spot a conductor. Other users get live updates. The notifications are removed once the train ride ended.
 
-* Build a Node Web App which consumes an external data source through an API and serves a frontend using routing and templating techniques.
-* Create a "live" web app which reflects changes to the back-end data model in reactive front-end views, using real-time, event-based, messaging technologies like sockets or server-sent-events.
-* Describe their work in a professional readme with insightful diagrams showing the life cycle of their data.
+# Table of Content
+- [Dependencies](#dependencies)
+- [Features](#features)
+- [Get started](#get-started)
+- [Socket](#socket)
+- [To do](#to-do)
+- [Resources](#resources)
 
-<!-- ☝️ replace this description -->
+## Dependencies
+*   [x] Server: [Node](https://nodejs.org/en/)
+*   [x] Routing: [Express](https://expressjs.com/)
+*   [x] Templating: [EJS](http://ejs.co/)
+*   [x] CSS: [SASS](https://sass-lang.com/)
+*   [x] Monitor: [https://nodemon.io/](https://nodemon.io/)
+*   [x] Real time engine: [Sockets.io](https://socket.io/)
+*   [x] Ns API: [NS API](https://www.npmjs.com/package/ns-api)
+*   [x] Google Matrix API: [Google Matrix API](https://developers.google.com/maps/)
+*   [x] Real time engine: [Sockets.io](https://socket.io/)
 
-<!-- Add a nice image here at the end of the week, showing off your shiny frontend 📸 -->
+## Features
+* Automatically calculates on which train you are
+* Live notifications
+* Add notifications
+* Multiple user support
+* Old notifications get removed
 
-<!-- Maybe a table of contents here? 📚 -->
+## Get started
+* Run `$ git clone https://github.com/fennadew/real-time-web.git` in your terminal in the desired directory.
+* `cd` to the repository and run `npm install` to install all dependencies.
+* Run `npm run nodemon` start the server with automatic reload.
+App listens on `http://localhost:3000/`.
 
-<!-- How about a section that describes how to install this project? 🤓 -->
+## Socket.io, Node.js and Express
+Socket.io is a real time engine that ensures that you can see the same information in real time or different browsers, can input and be updated in all browsers. This library works with Node.js and communicates changes to the server. Express is used for routing.
 
-<!-- ...but how does one use this project? What are its features 🤔 -->
+## To do
+*   [ ] Better styling
+*   [ ] More functionalities
+*   [ ] Improve perfomance
+*   [ ] Make available for mobile
 
-<!-- What external data source is featured in your project and what are its properties 🌠 -->
-
-<!-- Where do the 0️⃣s and 1️⃣s live in your project? What db system are you using?-->
-
-<!-- Maybe a checklist of done stuff and stuff still on your wishlist? ✅ -->
-
-<!-- How about a license here? 📜 (or is it a licence?) 🤷 -->
