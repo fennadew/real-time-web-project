@@ -84,7 +84,7 @@ function callBackStations(err, data) {
 }
 
 // Connection URL
-const url = 'mongodb://localhost:27017';
+const url = process.env.MONGODB_URI;
 
 // Database Name
 const dbName = 'real-time-notifications';
@@ -94,7 +94,7 @@ MongoClient.connect(url, function (err, client) {
     assert.equal(null, err);
     console.log("Connected successfully to server");
     const db = client.db(dbName);
-    const notificationsCollection = db.collection('notifications');
+    const notificationsCollection = client.collection('notifications');
 
     const dataUser = {
         arrivalTime: '',
@@ -276,4 +276,4 @@ MongoClient.connect(url, function (err, client) {
     }, 300000);
 });
 
-server.listen(3000, () => console.log('Listening on port 3000'));
+server.listen(4567, () => console.log('Listening on port 3000'));
