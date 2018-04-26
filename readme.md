@@ -2,6 +2,8 @@
 
 For this course I created a real conductor spotting application. To make this happen, I used the NS API, Google maps API, Node, Express, EJS and Socket.io. Users can send a notification when they spot a conductor. Other users get live updates. The notifications are removed once the train ride ended.
 
+![Gif](https://github.com/fennadew/real-time-web-project/blob/master/public/images/gif.gif)
+
 # Table of Content
 - [Dependencies](#dependencies)
 - [Features](#features)
@@ -27,6 +29,7 @@ For this course I created a real conductor spotting application. To make this ha
 * Add notifications
 * Multiple user support
 * Old notifications get removed
+* Offline support
 
 ## Get started
 * Run `$ git clone https://github.com/fennadew/real-time-web.git` in your terminal in the desired directory.
@@ -36,6 +39,9 @@ App listens on `http://localhost:3000/`.
 
 ## Socket.io, Node.js and Express
 Socket.io is a real time engine that ensures that you can see the same information in real time or different browsers, can input and be updated in all browsers. This library works with Node.js and communicates changes to the server. Express is used for routing.
+
+## Data model
+![Gif](https://github.com/fennadew/real-time-web-project/blob/master/public/images/IMG_9728.JPG)
 
 ## To do
 *   [ ] Better styling
