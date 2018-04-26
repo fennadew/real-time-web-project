@@ -137,12 +137,15 @@ form {
 
   ul {
     position: absolute;
-    background: #FFF;
+    background: #F2F2F2;
     width: 100%;
     padding: 0 10px;
     max-height: 200px;
     overflow: scroll;
     z-index: 10;
+    &:last-of-type {
+      z-index: 5;
+    }
   }
 }
 
