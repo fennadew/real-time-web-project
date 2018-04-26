@@ -58,7 +58,6 @@ const htmlElements = require('./htmlElements');
 
 const formHandler = {
     init() {
-        console.log(new Date())
         socketIo.init();
         htmlElements.addButton.addEventListener('click', (e) => {
             htmlElements.formContainer.classList.remove('hide');
@@ -69,6 +68,7 @@ const formHandler = {
             htmlElements.formContainer.classList.add('hide');
             htmlElements.body.classList.remove('fixed');
         });
+
 
         htmlElements.form.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -108,6 +108,12 @@ const formHandler = {
         p.classList.add("msg");
         if (output === "success") {
             p.classList.add("success-msg");
+            setTimeout(() => {
+                htmlElements.formContainer.classList.add('hide');
+                htmlElements.body.classList.remove('fixed');
+            }, 200)
+
+
         } else {
             p.classList.add("warning-msg");
         }
@@ -148,7 +154,7 @@ const content = {
             const divBig = document.createElement('div');
             const divSmall = document.createElement('div');
             const time = document.createElement('div');
-            const timeText = document.createTextNode("Posted on: " + this.timeConverter(notifications[i].Notificaties[0].time));
+            const timeText = document.createTextNode("First notification on: " + this.timeConverter(notifications[i].Notificaties[0].time));
             const updates = document.createElement('span');
             const updatesCount = document.createTextNode(notifications[i].Notificaties.length + " Notifications");
             updates.appendChild(updatesCount);
@@ -167,12 +173,31 @@ const content = {
             }
             const textSmallNode = document.createTextNode(textSmall);
 
+            let divNot = document.createElement('div');
+            divNot.classList.add('noti');
+            for(let a = 0; a < notifications[i].Notificaties.length; a++) {
+                let name = document.createElement('div');
+                let timeNot = document.createElement('div');
+                let timeTextNot = document.createTextNode("Posted on: " + this.timeConverter(notifications[i].Notificaties[a].time));
+                let nameNot = document.createTextNode(notifications[i].Notificaties[a].message);
+                let divNotContainer = document.createElement('div');
+                timeNot.appendChild(timeTextNot);
+                name.appendChild(nameNot);
+                divNotContainer.appendChild(name);
+                divNotContainer.appendChild(timeNot);
+                divNot.appendChild(divNotContainer);
+            }
+
             divBig.appendChild(text);
             divSmall.appendChild(textSmallNode);
             li.appendChild(divBig);
             li.appendChild(divSmall);
             li.appendChild(time);
             li.appendChild(updates);
+            li.appendChild(divNot);
+            li.addEventListener('click', () => {
+                li.classList.toggle('open');
+            });
             ul.appendChild(li);
         }
         htmlElements.notifications.appendChild(ul);
@@ -182,6 +207,30 @@ const content = {
         const updateList = li[(li.length -1) - obj.index];
         const count = updateList.querySelector('span');
         count.innerHTML = obj.train.Notificaties.length + " Notifications";
+
+        const noti = updateList.getElementsByClassName('noti');
+        let child = noti[0].firstChild;
+
+        while( child ) {
+            noti[0].removeChild( child );
+            child = noti[0].firstChild;
+        }
+
+        for(let a = 0; a < obj.train.Notificaties.length; a++) {
+            console.log(obj.train.Notificaties)
+            let name = document.createElement('div');
+            let timeNot = document.createElement('div');
+            let timeTextNot = document.createTextNode("Posted on: " + this.timeConverter(obj.train.Notificaties[a].time));
+            let nameNot = document.createTextNode(obj.train.Notificaties[a].message);
+            let divNotContainer = document.createElement('div');
+            timeNot.appendChild(timeTextNot);
+            name.appendChild(nameNot);
+            divNotContainer.appendChild(name);
+            divNotContainer.appendChild(timeNot);
+            noti[0].appendChild(divNotContainer);
+        }
+
+        updateList.appendChild(noti[0]);
     },
     addNotifications(notification) {
         let ul = document.querySelector('.notifications ul');
@@ -212,12 +261,31 @@ const content = {
         }
         const textSmallNode = document.createTextNode(textSmall);
 
+        let divNot = document.createElement('div');
+        divNot.classList.add('noti');
+        for(let a = 0; a <notification.Notificaties.length; a++) {
+            let name = document.createElement('div');
+            let timeNot = document.createElement('div');
+            let timeTextNot = document.createTextNode("Posted on: " + this.timeConverter(notification.Notificaties[a].time));
+            let nameNot = document.createTextNode(notification.Notificaties[a].message);
+            let divNotContainer = document.createElement('div');
+            timeNot.appendChild(timeTextNot);
+            name.appendChild(nameNot);
+            divNotContainer.appendChild(name);
+            divNotContainer.appendChild(timeNot);
+            divNot.appendChild(divNotContainer);
+        }
+
         divBig.appendChild(text);
         divSmall.appendChild(textSmallNode);
         li.appendChild(divBig);
         li.appendChild(divSmall);
         li.appendChild(time);
         li.appendChild(updates);
+        li.appendChild(divNot);
+        li.addEventListener('click', () => {
+            li.classList.toggle('open');
+        });
         ul.insertBefore(li, ul.firstChild);
     },
     timeConverter(unix_timestamp) {

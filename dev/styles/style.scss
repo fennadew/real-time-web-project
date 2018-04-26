@@ -186,6 +186,7 @@ label {
 }
 
 .success-msg {
+  padding-top: 20px;
   color: green;
 }
 
@@ -250,6 +251,18 @@ h1 {
     -moz-box-shadow: 3px 3px 12px -1px rgba(0,0,0,0.22);
     box-shadow: 3px 3px 12px -1px rgba(0,0,0,0.22);
     background-color: #FFF;
+    max-height: 170px;
+    overflow: hidden;
+    cursor: pointer;
+    .noti {
+      opacity: 0;
+    }
+    &.open {
+      max-height: none;
+      .noti {
+        opacity: 1;
+      }
+    }
   }
   .big {
     font-size: 1.2em;
@@ -263,6 +276,16 @@ h1 {
   }
    .small {
     font-weight: 300;
+  }
+
+  .noti {
+    padding-top: 20px;
+    > div {
+      padding: 15px 0;
+      > div {
+        font-weight: 300;
+      }
+    }
   }
 }
 

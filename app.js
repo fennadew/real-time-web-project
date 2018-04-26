@@ -96,6 +96,12 @@ MongoClient.connect(url, function (err, client) {
     const db = client.db(dbName);
     const notificationsCollection = db.collection('notifications');
 
+    const dataUser = {
+        arrivalTime: '',
+        notificationTime: '',
+        train: []
+    };
+
     io.on('connection', function (socket) {
         socket.on('submit', function (data) {
             const params = {
@@ -127,14 +133,16 @@ MongoClient.connect(url, function (err, client) {
                         const speed = 120;
                         const duration = (km / speed) * 60;
 
-                        const date = new Date();
-                        const hours = date.getHours();
-                        const minutesToArrival = date.getMinutes() + parseInt(duration);
-                        const minutesAtTime = date.getMinutes();
+                        const hours = moment().hours();
+                        const minutesToArrival = moment().minute() + parseInt(duration);
+                        const minutesAtTime = moment().minute();
                         const minutesTotal = minutesToArrival > 9 ? "" + minutesToArrival : "0" + minutesToArrival;
                         const minutesAtTimeTotal = minutesAtTime > 9 ? "" + minutesAtTime : "0" + minutesAtTime;
                         dataUser.notificationTime = minutesAtTimeTotal > 9 ? hours + ":" + minutesAtTime : hours + ":" + ("0" + minutesAtTime);
-                        dataUser.arrivalTime = hours + minutesTotal.substr(-2);
+                        dataUser.arrivalTime = moment().add(duration, 'm').hours() +""+ moment().add(duration, 'm').minutes();
+
+                        const time = moment().add(duration, 'm');
+
                         ns.reisadvies(params, myCallback);
                     })
                     .catch((err) => {
@@ -144,11 +152,6 @@ MongoClient.connect(url, function (err, client) {
                 socket.emit('warning', warnings.fromStation);
             }
 
-            const dataUser = {
-                arrivalTime: '',
-                notificationTime: '',
-                train: []
-            };
 
             function myCallback(err, data) {
                 if (err) {
@@ -203,10 +206,11 @@ MongoClient.connect(url, function (err, client) {
                     if (num - Number(arr[lo].ActueleVertrekTijd) <= Number(arr[hi].ActueleVertrekTijd) - num) {
                         return Number(arr[lo].ActueleVertrekTijd);
                     }
+
                     return Number(arr[hi].ActueleVertrekTijd);
                 }
 
-                const closest = findClosest(dataUser, data);
+                const closest = findClosest(dataUser.arrivalTime, data);
 
                 dataUser.train = data.filter((obj) => {
                     return obj.ActueleVertrekTijd === String(closest);
@@ -240,6 +244,7 @@ MongoClient.connect(url, function (err, client) {
                                 train: docs[i],
                                 index: i
                             };
+
                             io.sockets.emit('update', obj);
                         }
                     }
@@ -253,7 +258,7 @@ MongoClient.connect(url, function (err, client) {
                                 console.log(err);
                             }
                         });
-                        console.log("New train");
+                        console.log(train);
                         io.sockets.emit('notifications', train);
                     }
                 });
