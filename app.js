@@ -83,18 +83,6 @@ function callBackStations(err, data) {
     }
 }
 
-// Connection URL
-const url = process.env.MONGODB_URI;
-
-// Database Name
-const dbName = 'conductor';
-
-// Use connect method to connect to the server
-MongoClient.connect(url, function (err, client) {
-    assert.equal(null, err);
-    console.log("Connected successfully to server");
-    const db = client.db(dbName);
-    const notificationsCollection = db.collection('notifications');
 
     const dataUser = {
         arrivalTime: '',
@@ -253,11 +241,6 @@ MongoClient.connect(url, function (err, client) {
                         train.Notificaties.push({});
                         train.Notificaties[0].message = data.notifications;
                         train.Notificaties[0].time = moment().format();
-                        notificationsCollection.insertOne(train, function (err, res) {
-                            if (err) {
-                                console.log(err);
-                            }
-                        });
                         console.log(train);
                         io.sockets.emit('notifications', train);
                     }
@@ -266,14 +249,8 @@ MongoClient.connect(url, function (err, client) {
             }
         });
 
-        notificationsCollection.find().toArray().then(function (docs) {
-            socket.emit("notificationsHistory", docs);
-        });
     });
 
-    setInterval(() => {
-        notificationsCollection.remove( { "ActueleAankomstTijd" : {"$lt" : moment().format()} })
-    }, 300000);
-});
+
 
 server.listen(3000, () => console.log('Listening on port 3000'));
