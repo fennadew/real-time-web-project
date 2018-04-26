@@ -1,5 +1,9 @@
-<script src="/reload/reload.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/bundle.min.js"></script>
+<script>
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js');
+    }
+</script>
 </body>
 </html>
