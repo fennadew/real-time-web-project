@@ -7,11 +7,15 @@ const htmlElements = {
     errorMessage: document.querySelector('.error'),
     lonInput: document.getElementById('lon'),
     latInput: document.getElementById('lat'),
+    body: document.querySelector('body'),
     loader: document.querySelector('.loader'),
     form: document.querySelector("form"),
+    formContainer: document.querySelector('.report'),
     requiredInputs: document.querySelectorAll('.required'),
     empty: document.querySelector('.empty'),
-    notifications: document.querySelector('.notifications')
+    notifications: document.querySelector('.notifications'),
+    addButton: document.querySelector('main > button'),
+    closeButton: document.querySelector('.report > button')
 };
 
 module.exports = htmlElements;

@@ -10,6 +10,7 @@ require('dotenv').config();
 const fetch = require('node-fetch');
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
+const moment = require('moment');
 
 // Use EJS and the views directory for view engine
 app
@@ -135,7 +136,10 @@ MongoClient.connect(url, function (err, client) {
                         dataUser.notificationTime = minutesAtTimeTotal > 9 ? hours + ":" + minutesAtTime : hours + ":" + ("0" + minutesAtTime);
                         dataUser.arrivalTime = hours + minutesTotal.substr(-2);
                         ns.reisadvies(params, myCallback);
-                    });
+                    })
+                    .catch((err) => {
+                    console.log(err);
+                });
             } else {
                 socket.emit('warning', warnings.fromStation);
             }
@@ -229,7 +233,7 @@ MongoClient.connect(url, function (err, client) {
                                 {"ReisDeel.RitNummer": train.ReisDeel[0].RitNummer},
                                 {$push: {"Notificaties": {message: data.notifications, time: new Date()}}}
                             );
-                            console.log(docs[i].Notificaties);
+                            console.log("already exist");
                             docs[i].Notificaties.push({message: data.notifications, time: new Date()});
 
                             const obj = {
@@ -243,12 +247,13 @@ MongoClient.connect(url, function (err, client) {
                         train.Notificaties = [];
                         train.Notificaties.push({});
                         train.Notificaties[0].message = data.notifications;
-                        train.Notificaties[0].time = new Date();
+                        train.Notificaties[0].time = moment().format();
                         notificationsCollection.insertOne(train, function (err, res) {
                             if (err) {
                                 console.log(err);
                             }
                         });
+                        console.log("New train");
                         io.sockets.emit('notifications', train);
                     }
                 });
@@ -262,8 +267,8 @@ MongoClient.connect(url, function (err, client) {
     });
 
     setInterval(() => {
-
-    }, 500000);
+        notificationsCollection.remove( { "ActueleAankomstTijd" : {"$lt" : moment().format()} })
+    }, 300000);
 });
 
 server.listen(3000, () => console.log('Listening on port 3000'));

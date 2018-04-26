@@ -2,7 +2,18 @@ const htmlElements = require('./htmlElements');
 
 const formHandler = {
     init() {
+        console.log(new Date())
         socketIo.init();
+        htmlElements.addButton.addEventListener('click', (e) => {
+            htmlElements.formContainer.classList.remove('hide');
+            htmlElements.body.classList.add('fixed');
+        });
+
+        htmlElements.closeButton.addEventListener('click', (e) => {
+            htmlElements.formContainer.classList.add('hide');
+            htmlElements.body.classList.remove('fixed');
+        });
+
         htmlElements.form.addEventListener('submit', (e) => {
             e.preventDefault();
             let allFilled = true;

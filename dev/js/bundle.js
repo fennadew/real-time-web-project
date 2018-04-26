@@ -58,7 +58,18 @@ const htmlElements = require('./htmlElements');
 
 const formHandler = {
     init() {
+        console.log(new Date())
         socketIo.init();
+        htmlElements.addButton.addEventListener('click', (e) => {
+            htmlElements.formContainer.classList.remove('hide');
+            htmlElements.body.classList.add('fixed');
+        });
+
+        htmlElements.closeButton.addEventListener('click', (e) => {
+            htmlElements.formContainer.classList.add('hide');
+            htmlElements.body.classList.remove('fixed');
+        });
+
         htmlElements.form.addEventListener('submit', (e) => {
             e.preventDefault();
             let allFilled = true;
@@ -228,11 +239,15 @@ const htmlElements = {
     errorMessage: document.querySelector('.error'),
     lonInput: document.getElementById('lon'),
     latInput: document.getElementById('lat'),
+    body: document.querySelector('body'),
     loader: document.querySelector('.loader'),
     form: document.querySelector("form"),
+    formContainer: document.querySelector('.report'),
     requiredInputs: document.querySelectorAll('.required'),
     empty: document.querySelector('.empty'),
-    notifications: document.querySelector('.notifications')
+    notifications: document.querySelector('.notifications'),
+    addButton: document.querySelector('main > button'),
+    closeButton: document.querySelector('.report > button')
 };
 
 module.exports = htmlElements;
@@ -281,4 +296,6 @@ const navigatorGeo = {
 };
 
 module.exports = navigatorGeo;
-},{"./htmlElements":4}]},{},[1,2,3,4,5,6]);
+},{"./htmlElements":4}],7:[function(require,module,exports){
+arguments[4][2][0].apply(exports,arguments)
+},{"dup":2}]},{},[1,2,3,4,5,6,7]);

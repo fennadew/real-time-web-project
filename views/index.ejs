@@ -1,41 +1,44 @@
 <%- include('partials/head.ejs') %>
 <main>
-    <form autocomplete="off" method="post" action="/">
-        <fieldset>
-            <legend>Report a complaint</legend>
-            <span class="loader"></span>
-            <span class="retrieving">Retrieving location</span>
-            <span class="error hidden">Please allow location access</span>
-            <label>
-                <input id="nextStation" class="required" type="text" name="nextStation" value="" placeholder="Next station of the train">
-            </label>
-            <ul class="nextstation-autocomplete">
-            </ul>
-            <label>
-                <input id="lastStation" class="required" type="text" name="finalStation" value="Utrecht centraal" placeholder="End station of the train">
-            </label>
-            <ul class="laststation-autocomplete">
-            </ul>
-            <div class="offset">
-            <label for="note">Notification</label>
-            <select id="note" class="required">
-                <option value="Conductor in">Conductor in the train</option>
-                <option value="Conductor left">Conductor left the train</option>
-                <option value="Vomit">Vomit in the train</option>
-                <option value="Fight">Fight in the train</option>
-            </select>
-            </div>
-            <div class="hidden">
-                <input id="lon" type="text" name="lon" class="required">
-                <input id="lat" type="text" name="lat" class="required">
-            </div>
-        </fieldset>
-        <input type="submit" value="Submit">
-    </form>
-
+    <h1>Spot the conductor</h1>
     <section class="notifications">
-        <h1>Notifications</h1>
-        <h2 class="empty">No notifications</h2>
+        <h2>Notifications</h2>
+        <h3 class="empty">No notifications</h3>
     </section>
+    <button>Add notification</button>
+    <section class="report hide">
+        <button>Close</button>
+        <form autocomplete="off" method="post" action="/">
+            <fieldset>
+                <legend>Report a conductor</legend>
+                <span class="loader"></span>
+                <span class="retrieving">Retrieving location</span>
+                <span class="error hidden">Please allow location access</span>
+                <label>
+                    <input id="nextStation" class="required" type="text" name="nextStation" value="" placeholder="Next station of the train">
+                </label>
+                <ul class="nextstation-autocomplete">
+                </ul>
+                <label>
+                    <input id="lastStation" class="required" type="text" name="finalStation" value="Utrecht centraal" placeholder="End station of the train">
+                </label>
+                <ul class="laststation-autocomplete">
+                </ul>
+                <div class="offset">
+                    <label for="note">Notification</label>
+                    <select id="note" class="required">
+                        <option value="Conductor in">Conductor in the train</option>
+                        <option value="Conductor left">Conductor left the train</option>
+                    </select>
+                </div>
+                <div class="hidden">
+                    <input id="lon" type="text" name="lon" class="required">
+                    <input id="lat" type="text" name="lat" class="required">
+                </div>
+            </fieldset>
+            <input type="submit" value="Submit">
+        </form>
+    </section>
+
 </main>
 <%- include('partials/foot.ejs') %>
