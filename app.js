@@ -84,10 +84,10 @@ function callBackStations(err, data) {
 }
 
 // Connection URL
-const url = 'mongodb://localhost:27017';
+const url = process.env.MONGODB_URI;
 
 // Database Name
-const dbName = 'real-time-notifications';
+const dbName = 'conductor';
 
 // Use connect method to connect to the server
 MongoClient.connect(url, function (err, client) {
